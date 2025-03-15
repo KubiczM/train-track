@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Training Event</title>
+</head>
+<body>
+    <h1>Add a Training Event</h1>
+    <form method="POST">
+        <label for="name">Training Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="date">Training Date (YYYY-MM-DD):</label><br>
+        <input type="text" id="date" name="date" required><br><br>
+
+        <button type="submit">Add</button>
+    </form>
+
+    <a href="{{ url_for('index') }}">Back to Calendar</a>
+</body>
+</html>

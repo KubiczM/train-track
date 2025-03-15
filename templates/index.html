@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Calendar</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Training Calendar</h1>
+
+    <h2>Upcoming Training Events</h2>
+    <ul>
+        {% for training in trainings %}
+            <li>{{ training.name }} - {{ training.date.strftime('%Y-%m-%d') }}</li>
+        {% else %}
+            <li>No upcoming training events.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('add_event') }}">Add a New Training Event</a>
+</body>
+</html>
