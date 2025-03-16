@@ -9,15 +9,15 @@
 <body>
     <h1>Training Calendar</h1>
 
-    <h2>Upcoming Training Events</h2>
+    <h2>Upcoming Trainings</h2>
     <ul>
         {% for training in trainings %}
-            <li>{{ training.name }} - {{ training.date.strftime('%Y-%m-%d') }}</li>
+            <li>{{ training.name }}: {{ training.date.strftime('%Y-%m-%d, %H:%M') }}</li>
         {% else %}
-            <li>No upcoming training events.</li>
+            <li>No Upcoming Trainings.</li>
         {% endfor %}
     </ul>
 
-    <a href="{{ url_for('add_event') }}">Add a New Training Event</a>
+    <a href="{{ url_for('add_training') }}">Add New Training</a>
 </body>
 </html>
