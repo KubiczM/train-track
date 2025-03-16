@@ -15,10 +15,7 @@ def add_training():
         name = request.form.get('name')
         date = request.form.get('date')
 
-        try:
-            date_obj = datetime.strptime(date, '%Y-%m-%dT%H:%M')
-        except ValueError:
-            return "Invalid date format! Use YYYY-MM-DD HH:MM", 400
+        date_obj = datetime.strptime(date, '%Y-%m-%dT%H:%M')
 
         trainings.append({'name': name, 'date': date_obj})
         return redirect(url_for('index'))
