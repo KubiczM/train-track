@@ -9,10 +9,15 @@
 <body>
     <h1>Training Calendar</h1>
 
-    <h2>Upcoming Trainings</h2>
+    <h2>Upcoming Trainings:</h2>
     <ul>
         {% for training in trainings %}
-            <li>{{ training.name }}: {{ training.date.strftime('%Y-%m-%d, %H:%M') }}</li>
+            <li>
+                {{ training.name }}: {{ training.date.strftime('%Y-%m-%d, %H:%M') }}
+                <form method="POST" action="{{ url_for('delete_training', index=loop.index0) }}" style="display:inline;">
+                    <button type="submit" style="margin-left: 10px; color: red;">Delete</button>
+                </form>
+            </li>
         {% else %}
             <li>No Upcoming Trainings.</li>
         {% endfor %}

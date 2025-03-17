@@ -7,12 +7,17 @@
 </head>
 <body>
     <h1>Add New Training</h1>
+
+    {% if request.method == 'POST' %}
+        <p>Debug: {{ request.form }}</p>
+    {% endif %}
+
     <form method="POST">
         <label for="name">Name:</label><br>
         <input type="text" id="name" name="name" required><br><br>
 
-        <label for="datetime">Select Date and Time:</label>
-        <input type="datetime-local" id="datetime" name="date" required>
+        <label for="datetime">Select Date and Time:</label><br>
+        <input type="datetime-local" id="datetime" name="date" required><br><br>
 
         <button type="submit">Add</button>
     </form>

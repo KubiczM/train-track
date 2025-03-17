@@ -5,22 +5,37 @@ app = Flask(__name__)
 
 trainings = []
 
-@app.route('/')
+
+@app.route("/")
 def index():
-    return render_template('index.html', trainings=trainings)
+    return render_template("index.html", trainings=trainings)
 
-@app.route('/add', methods=['GET', 'POST'])
+
+@app.route("/add", methods=["GET", "POST"])
 def add_training():
-    if request.method == 'POST':
-        name = request.form.get('name')
-        date = request.form.get('date')
+    global trainings
+    if request.method == "POST":
+        name = request.form.get("name")
+        date = request.form.get("date")
 
-        date_obj = datetime.strptime(date, '%Y-%m-%dT%H:%M')
+        if not name or not date:
+            return "Name and date are required!", 400
 
-        trainings.append({'name': name, 'date': date_obj})
-        return redirect(url_for('index'))
+        date_obj = datetime.strptime(date, "%Y-%m-%dT%H:%M")
 
-    return render_template('add_training.html')
+        trainings.append({"name": name, "date": date_obj})
+        return redirect(url_for("index"))
 
-if __name__ == '__main__':
+    return render_template("add_training.html")
+
+
+@app.route("/delete/<int:index>", methods=["POST"])
+def delete_training(index):
+    global trainings
+    if 0 <= index < len(trainings):
+        del trainings[index]
+    return redirect(url_for("index"))
+
+
+if __name__ == "__main__":
     app.run(debug=True)
