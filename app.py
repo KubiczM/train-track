@@ -15,11 +15,11 @@ def index():
 def add_training():
     global trainings
     if request.method == "POST":
-        name = request.form.get("name")
-        date = request.form.get("date")
+        name = request.form.get('name', '').strip()
+        date = request.form.get('date', '').strip()
 
         if not name or not date:
-            return "Name and date are required!", 400
+                return render_template('add_training.html', error="Name and date are required!")
 
         date_obj = datetime.strptime(date, "%Y-%m-%dT%H:%M")
 
