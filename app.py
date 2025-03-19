@@ -13,13 +13,12 @@ def index():
 
 @app.route("/add", methods=["GET", "POST"])
 def add_training():
-    global trainings
     if request.method == "POST":
-        name = request.form.get('name', '').strip()
-        date = request.form.get('date', '').strip()
+        name = request.form.get("name", "").strip()
+        date = request.form.get("date", "").strip()
 
         if not name or not date:
-                return render_template('add_training.html', error="Name and date are required!")
+            return render_template("add_training.html", error="Name and date are required!")
 
         date_obj = datetime.strptime(date, "%Y-%m-%dT%H:%M")
 
@@ -34,6 +33,28 @@ def delete_training(index):
     global trainings
     if 0 <= index < len(trainings):
         del trainings[index]
+    return redirect(url_for("index"))
+
+
+@app.route("/edit/<int:index>|", methods=["GET", "POST"])
+def edit_training(index):
+    if 0 <= index < len(trainings):
+        training = trainings[index]
+
+        if request.method == "POST":
+            name = request.form.get("name", "").strip()
+            date = request.form.get("date", "").strip()
+
+            if not name or not date:
+                return render_template("edit_training.html",training=training,
+                    index=index, error="Name and date are required!",)
+
+            training["name"] = name
+            training["date"] = datetime.strptime(date, "%Y-%m-%dT%H:%M")
+            return redirect(url_for("index"))
+
+        return render_template("edit_training.html", training=training, index=index)
+
     return redirect(url_for("index"))
 
 

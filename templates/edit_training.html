@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Training</title>
+    <title>Edit Training</title>
     <style>
         .error { color: red; font-weight: bold; }
         .input-error { border: 2px solid red; }
     </style>
 </head>
 <body>
-    <h1>Add New Training</h1>
+    <h1>Edit Training</h1>
 
     {% if error %}
         <p class="error">{{ error }}</p>
@@ -18,14 +18,16 @@
 
     <form method="POST">
         <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" class="{{ 'input-error' if error }}"><br><br>
+        <input type="text" id="name" name="name" value="{{ training.name }}"
+               class="{{ 'input-error' if error }}"><br><br>
 
         <label for="datetime">Select Date and Time:</label><br>
-        <input type="datetime-local" id="date" name="date" class="{{ 'input-error' if error }}"><br><br>
+        <input type="datetime-local" id="datetime" name="date" value="{{ training.date.strftime('%Y-%m-%dT%H:%M') }}"
+               class="{{ 'input-error' if error }}"><br><br>
 
-        <button type="submit">Add</button>
+        <button type="submit">Save</button>
     </form>
 
-    <a href="{{ url_for('index') }}">Back to Calendar</a>
+    <a href="{{ url_for('index') }}">Cancel</a>
 </body>
 </html>
