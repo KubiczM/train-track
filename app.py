@@ -1,9 +1,44 @@
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
+import json
+import os
 
 app = Flask(__name__)
 
-trainings = []
+TRAININGS_FILE = "trainings.json"
+
+
+def load_trainings():
+    if os.path.exists(TRAININGS_FILE):
+        with open(TRAININGS_FILE, "r", encoding="utf-8") as file:
+            try:
+                data = json.load(file)
+                return [
+                    {
+                        "name": t["name"],
+                        "date": datetime.strptime(t["date"], "%Y-%m-%dT%H:%M"),
+                    }
+                    for t in data
+                ]
+            except json.JSONDecodeError:
+                return []
+    return []
+
+
+def save_trainings():
+    with open(TRAININGS_FILE, "w", encoding="utf-8") as file:
+        json.dump(
+            [
+                {"name": t["name"], "date": t["date"].strftime("%Y-%m-%dT%H:%M")}
+                for t in trainings
+            ],
+            file,
+            ensure_ascii=False,
+            indent=4,
+        )
+
+
+trainings = load_trainings()
 
 
 @app.route("/")
@@ -23,6 +58,7 @@ def add_training():
         date_obj = datetime.strptime(date, "%Y-%m-%dT%H:%M")
 
         trainings.append({"name": name, "date": date_obj})
+        save_trainings()
         return redirect(url_for("index"))
 
     return render_template("add_training.html")
@@ -33,6 +69,7 @@ def delete_training(index):
     global trainings
     if 0 <= index < len(trainings):
         del trainings[index]
+        save_trainings()
     return redirect(url_for("index"))
 
 
@@ -46,11 +83,12 @@ def edit_training(index):
             date = request.form.get("date", "").strip()
 
             if not name or not date:
-                return render_template("edit_training.html",training=training,
-                    index=index, error="Name and date are required!",)
+                return render_template("edit_training.html", training=training,
+                                       index=index, error="Name and date are required!",)
 
             training["name"] = name
             training["date"] = datetime.strptime(date, "%Y-%m-%dT%H:%M")
+            save_trainings()
             return redirect(url_for("index"))
 
         return render_template("edit_training.html", training=training, index=index)
