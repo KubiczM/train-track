@@ -20,7 +20,8 @@ ul {
 }
 
 li {
-    background-color: #f0f0f0;
-    padding: 10px;
+    background-color: #e6e6e6;
+    padding: 0px 10px 3px 10px;
     margin-bottom: 5px;
+    line-height: 0;
 }
