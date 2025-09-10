@@ -1,5 +1,5 @@
 """
-TrainTrack - A simple Flask web application for managing and displaying upcoming training sessions.
+train-track - A simple Flask web application for managing and displaying upcoming training sessions.
 
 This application allows users to:
 - View a list of upcoming trainings
