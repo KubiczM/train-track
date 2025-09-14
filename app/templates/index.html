@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Train Track - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>All Trainings</h1>
+    <a href="{{ url_for('main.add_training') }}">Add New Training</a>
+    <ul>
+        {% for t in trainings %}
+        <li>
+            <strong>{{ t.name }}</strong>: {{ t.description }}
+            <a href="{{ url_for('main.edit_training', training_id=t.id) }}">Edit</a>
+            <form action="{{ url_for('main.delete_training', training_id=t.id) }}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
